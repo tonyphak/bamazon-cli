@@ -22,12 +22,13 @@ connection.connect(function (err) {
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-            console.log("ID: " + res[i].item_id + "\nProduct: " + res[i].product_name
-                + "\nDepartment: " + res[i].department_name + "\nPrice: " + res[i].price +
-                "\nQuantity: " + res[i].stock_quantity);
-            console.log("---------------------------------------");
-        }
+        console.table(res);
+        // for (var i = 0; i < res.length; i++) {
+        //     console.log("ID: " + res[i].item_id + "\nProduct: " + res[i].product_name
+        //         + "\nDepartment: " + res[i].department_name + "\nPrice: " + res[i].price +
+        //         "\nQuantity: " + res[i].stock_quantity);
+        //     console.log("---------------------------------------");
+        // }
         //use inquirer to obtain customer order information
         inquirer
             .prompt([
@@ -78,17 +79,44 @@ function viewProducts() {
                         ],
                         function (error) {
                             if (error) throw err;
-                            console.log("Purchase was a success! You have purchased " + custQuantity + " " + res[answer.id - 1].product_name + " for a total cost of $" + totalCost);
+                            console.log("Purchase was a success! You have purchased " + custQuantity + " " +
+                                res[answer.id - 1].product_name + " for a total cost of $" + totalCost);
                         }
                     );
+                    connection.query("UPDATE products SET ? WHERE ?", [
+                        { product_sales: totalCost + res[answer.id - 1].product_sales },
+                        { product_name: res[answer.id - 1].product_name }
+                    ], function (err, res) {
+                        if (err) throw err;
+                        console.log("product sales updated!");
+                        reorderPrompt();
+                    }
+                    )
                 }
-                reorderPrompt();
             })
-
     })
 }
 
-function reorderPrompt(){
+function reorderPrompt() {
     //use inquirer and type choose to continue shopping or exit
+    inquirer
+        .prompt([
+            {
+                name: "customerChoice",
+                type: "rawlist",
+                message: "Do you want to continue to [SHOP] or [EXIT]?",
+                choices: ["SHOP", "EXIT"]
+            }
+        ])
+        .then(function (answer) {
+            if (answer.customerChoice.toUpperCase() === "SHOP") {
+                //continue shopping function
+                viewProducts();
+            }
+            else {
+                console.log("Please come again!");
+                connection.end();
+            }
+        });
 }
 
