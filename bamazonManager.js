@@ -51,11 +51,6 @@ function saleSearch() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         console.table(res);
-        // for (var i = 0; i < res.length; i++) {
-        //     console.log("ID: " + res[i].item_id + "\nProduct: " + res[i].product_name
-        //         + "\nPrice: " + res[i].price + "\nQuantity: " + res[i].stock_quantity);
-        //     console.log("---------------------------------------");
-        // }
         managerMenu();
     });
 }
@@ -69,11 +64,6 @@ function lowInventory() {
             if (res[i].stock_quantity <= 5) {
                 console.table(res[i]);
             }
-            // if (res[i].stock_quantity <= 5) {
-            //     console.log("ID: " + res[i].item_id + "\nProduct: " + res[i].product_name
-            //         + "\nPrice: " + res[i].price + "\nQuantity: " + res[i].stock_quantity);
-            //     console.log("---------------------------------------");
-            // }
         }
         managerMenu();
     })

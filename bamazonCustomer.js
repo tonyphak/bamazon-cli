@@ -23,13 +23,6 @@ function viewProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         console.table(res);
-        // for (var i = 0; i < res.length; i++) {
-        //     console.log("ID: " + res[i].item_id + "\nProduct: " + res[i].product_name
-        //         + "\nDepartment: " + res[i].department_name + "\nPrice: " + res[i].price +
-        //         "\nQuantity: " + res[i].stock_quantity);
-        //     console.log("---------------------------------------");
-        // }
-        //use inquirer to obtain customer order information
         inquirer
             .prompt([
                 {
