@@ -1,4 +1,4 @@
-# Bamazon App Based of Command Line Interface
+# Bamazon App using Command Line Interface
 ## Bamazon an Amazon Competitor App
 User will be able look at a list of items and select the items he/she wants to buy. User will also be able to make changes to the list of items and its' information. The items has information such as the department they belong to as well as the stock quantity information
 ## Motivation
