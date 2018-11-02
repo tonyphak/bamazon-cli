@@ -23,7 +23,7 @@ function managerMenu() {
             type: "rawlist",
             message: "Hi Manager, what would you like to do?",
             choices: [
-                "View Prodcuts for Sale",
+                "View Products for Sale",
                 "View Low Inventory",
                 "Add to Inventory",
                 "Add New Product"
@@ -31,7 +31,7 @@ function managerMenu() {
         })
         .then(function (answer) {
             switch (answer.action) {
-                case "View Prodcuts for Sale":
+                case "View Products for Sale":
                     saleSearch();
                     break;
                 case "View Low Inventory":
@@ -54,17 +54,13 @@ function saleSearch() {
         managerMenu();
     });
 }
-
+//need work
 function lowInventory() {
     //products with inventory count lower than 5
-    var query = "SELECT * FROM products";
+    var query = "SELECT * FROM products WHERE stock_quantity <= 5";
     connection.query(query, function (err, res) {
         if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-            if (res[i].stock_quantity <= 5) {
-                console.table(res[i]);
-            }
-        }
+        console.table(res);
         managerMenu();
     })
 }

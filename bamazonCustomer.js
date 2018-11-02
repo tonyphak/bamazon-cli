@@ -31,7 +31,7 @@ function viewProducts() {
                     message: "What is the ID of the product that you want to buy?",
                     //validate function to confirm if customers' response is number between 0 and 10
                     validate: function (value) {
-                        if (isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= 10) {
+                        if (isNaN(value) === false && parseInt(value) > 1 && parseInt(value) <= 20) {
                             return true;
                         }
                         return "Please choose a valid ID";
@@ -55,6 +55,7 @@ function viewProducts() {
                 var totalCost = parseFloat(res[answer.id - 1].price * custQuantity.toFixed(2));
                 if (custQuantity >= res[answer.id - 1].stock_quantity) {
                     console.log("Insufficient Quantity");
+                    viewProducts();
                 } else {
                     var stockQuant = res[answer.id - 1].stock_quantity
                     //use mysql query to update table
