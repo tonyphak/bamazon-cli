@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 
     user: "root",
 
-    password: "rontayan",
+    password: "",
     database: "bamazon_DB"
 });
 //confirn connection
